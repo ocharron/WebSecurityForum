@@ -57,11 +57,11 @@ To install and run Web Security Forum on your local machine, follow these steps:
 
 ## Key Features
 
-1. **Content management system (CMS)**: Manage the catalog and the products from a tailor-made content management system.
-2. **Product Catalog**: Browse through a wide range of golf equipment, including clubs, balls, bags, shoes, etc.
-3. **Shopping Cart Management**: Add products to your cart and manage them easily before proceeding to checkout.
-4. **Secure Payment**: Use Stripe for safe and secure payment transactions.
-5. **User Management**: Register, login, and manage your user profile for a personalized experience.
+1. **Secure Authentication**: Implements ASP.NET Identity for secure user authentication.
+2. **Role-Based Authorization**: Manage user roles and permissions to protect sensitive features.
+3. **Protection Against Vulnerabilities**: Safeguards against SQL Injection, XSS, and CSRF.
+4. **Logging and Monitoring**: Includes security logging for monitoring login attempts and suspicious activities.
+5. **Error Handling**: Customized exception handling to prevent sensitive information exposure.
 
 ---
 
