@@ -1,0 +1,12 @@
+﻿@using Forum.Models.Home
+
+@model NewMessageVM
+
+<div class="col-12 row">
+    <h4>New Message</h4>
+    <form asp-action="NewMessage" id="new-message-form" class="col-12 p-0">
+        @Html.AntiForgeryToken()
+        <textarea id="new-message-text-area" maxlength="2000" asp-for="Contenu"></textarea>
+        <input type="submit" value="Post" class="btn btn-primary float-end" />
+    </form>
+</div>

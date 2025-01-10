@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Error";
+}
+
+<h1 class="text-danger">Error.</h1>
+<h2 class="text-danger">An error occurred while processing your request.</h2>
+
+@if (User.Identity!.IsAuthenticated)
+{
+    <p>
+        Go back to the <a asp-controller="Home" asp-action="Index">forum page</a> and try again.
+    </p>
+}
+else
+{
+    <p>
+        Try to login again at <a asp-controller="Account" asp-action="LogIn">this page</a>.
+    </p>
+}

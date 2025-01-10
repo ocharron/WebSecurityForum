@@ -1,0 +1,12 @@
+﻿@using Forum.Models.Home
+
+@model NewCommentaireVM
+
+<div class="col-12 row">
+    <form asp-action="NewCommentaire" class="new-commentaire-form" class="col-12 p-0">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(x => x.MessageId)
+        <textarea class="new-commentaire-text-area" maxlength="2000" asp-for="Contenu"></textarea>
+        <input type="submit" value="Comment" class="btn btn-outline-secondary float-end py-0 px-2" />
+    </form>
+</div>

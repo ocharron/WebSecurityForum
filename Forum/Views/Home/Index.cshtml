@@ -1,0 +1,87 @@
+﻿@using Forum.Models.Home;
+
+@model ForumVM
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id="index-new-message-container" class="col-10">
+    @{
+        await Html.RenderPartialAsync("_NewMessagePartial", Model.NewMessage); 
+    }
+</div>
+<div id="index-message-list-container" class="col-10">
+    @foreach (MessageVM message in Model.Messages)
+    {
+        <div class="row border border-dark col-12 mb-3">
+            <table class="table col-9 mb-3">
+                <thead>
+                    <tr>
+                        <th>
+                            <h5 class="mb-0">@message.UserName</h5>
+                            <span style="font-size:10px; color:grey; font-weight:600">
+                                @message.Date.ToString("MMMM dd, yyyy (HH:mm)")
+                            </span>
+                        </th>
+                        <th class="ps-0 align-content-center" style="width:40px;">
+                            @if (Model.IsAdmin || message.UserName == User.Identity!.Name)
+                            {
+                                <form asp-controller="Home" asp-action="DeleteMessage" asp-route-messageId="@message.Id" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <input title="Delete this message" type="submit" value="" class="btn btn-close" style="width: 20px; height:auto;" />
+                                </form>
+                            }
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid black">
+                        <td style="padding-top: 16px; padding-bottom: 16px;">
+                            @Html.Raw(message.Contenu.Replace("\n", "<br/>"))
+                        </td>
+                    </tr>
+                    @foreach (CommentaireVM commentaire in message.Commentaires!)
+                    {
+                        <tr>
+                            <td style="color: #575757; padding-right: 30px; padding-left: 30px;">
+                                <p style="font-size: 16px; margin-bottom: 0px; font-weight: 600;">@commentaire.UserName</p>
+                                <p style="font-size: 14px; margin-bottom: 0px;">@Html.Raw(commentaire.Contenu.Replace("\n", "<br/>"))</p>
+                            </td>
+                            <td class="ps-0 align-content-center" style="width:40px;">
+                                @if (Model.IsAdmin || commentaire.UserName == User.Identity!.Name)
+                                {
+                                    <form asp-controller="Home" asp-action="DeleteCommentaire" asp-route-commentaireId="@commentaire.Id" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <input title="Delete this comment" type="submit" value="" class="btn btn-close" style="width: 20px; height:auto;" />
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="row m-auto align-self-center">
+                <div style="margin:5px">
+                    @{
+                        await Html.RenderPartialAsync("_NewCommentairePartial", new NewCommentaireVM { Contenu = string.Empty, MessageId = message.Id });
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div id="index-page-selection-container" class="row">
+    <div class="col-6 justify-content-end d-flex">
+        @if (Model.HasPreviousPage)
+        {
+            @Html.ActionLink("<", "Index", new { page = Model.CurrentPage - 1 }, new { @class = "btn btn-primary", @title = "Previous page" })
+        }
+    </div>
+    <div class="col-6">
+        @if (Model.HasNextPage)
+        {
+            @Html.ActionLink(">", "Index", new { page = Model.CurrentPage + 1 }, new { @class = "btn btn-primary", @title = "Next page" })
+        }
+    </div>
+</div>
